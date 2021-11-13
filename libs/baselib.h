@@ -23,6 +23,7 @@
 
 #define COLORED_OUTPUT(str, color, file) IS_TERMINAL(file) ? (color str NATURAL) : str
 #define IS_TERMINAL(file) (file == stdin) || (file == stdout) || (file == stderr)
+#define INT_ADDRESS(ptr) (int)((char*)(ptr) - (char*)0)
 
 /*
 Default define to ASSERT_OK. Use it to customize macros for each project.
@@ -33,9 +34,7 @@ Default define to ASSERT_OK. Use it to customize macros for each project.
     if (VALIDATE_LEVEL >= WEAK_VALIDATE && type ## _error(obj)) {                   \
         type ## _dump(obj, reason);                                                 \
         if (VALIDATE_LEVEL >= HIGHEST_VALIDATE) {                                   \
-            FILE* log = open_file("log.txt", "a");                                  \
-            type ## _dump(obj, reason, "log.txt");                                  \
-            fclose(log);                                                            \
+            LOG_DUMP(obj, reason, type ## _dump)                                    \
         }                                                                           \
         ASSERT_IF(0, "verify failed", ret);                                         \
     } else if (type ## _error(obj)) {                                               \
@@ -69,14 +68,14 @@ Default define to ASSERT_OK. Use it to customize macros for each project.
     }                                                                               \
 }
 
-#define ASSERT_IF(cond, text, ret) {                                                \
+#define ASSERT_IF(cond, text, ret) do {                                             \
     assert((cond) && text);                                                         \
     if (!(cond)) {                                                                  \
         PRINT_WARNING(text "\n");                                                   \
         errno = -1;                                                                 \
         return ret;                                                                 \
     }                                                                               \
-}
+} while(0)
 
 #define FREE_PTR(ptr, type) {                   \
     free((ptr));                                \

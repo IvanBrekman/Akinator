@@ -1,0 +1,884 @@
+|-------------------------          Tree  Dump          -------------------------|
+Time: 11.11.2021 22:41:24, Thursday
+Check after ctor call
+    Tree state: -11 (Incorrect tree depth value. Should be (>= 0))
+
+Tree size:  1 
+Tree depth: -1 (BAD)
+
+Node <0x7ffd32630a40>----------------------------------------------------------
+Time: 11.11.2021 22:41:24, Thursday
+
+Check after ctor call
+ Node state: 0 (ok)
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: (nil) NULL
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: ''
+-------------------------------------------------------------------------------
+|---------------------Compilation  Date Nov 11 2021 22:41:24---------------------|
+
+Node <0x7fff3f555350>----------------------------------------------------------
+Time: 12.11.2021 17:47:54, Friday
+
+Check child  before add_child func
+ Node state:    -4 (POISONED value of left node canary. Its ptr to killed Node!!!)
+ Depth in tree: -12244582 (BAD)
+
+  Left canary: DEADA2EA (POISON)
+ Right canary: DEADA2EA (POISON)
+
+ Parent: 0x6 (BAD)
+ Left:   0x6 (BAD)
+ Right:  0x6 (BAD)
+
+ Value: 'Cant access data (bad ptr)'
+-------------------------------------------------------------------------------
+Node <0x7ffd879eb4b0>----------------------------------------------------------
+Time: 12.11.2021 17:51:03, Friday
+
+Check child  before add_child func
+ Node state:    -4 (POISONED value of left node canary. Its ptr to killed Node!!!)
+ Depth in tree: -12244582 (BAD)
+
+  Left canary: DEADA2EA (POISON)
+ Right canary: DEADA2EA (POISON)
+
+ Parent: 0x6 (BAD)
+ Left:   0x6 (BAD)
+ Right:  0x6 (BAD)
+
+ Value: 0xffffffffff45299a (Cant access to data)-------------------------------------------------------------------------------
+Node <0x7ffcd7c7e9b0>----------------------------------------------------------
+Time: 12.11.2021 17:51:13, Friday
+
+Check child  before add_child func
+ Node state:    -4 (POISONED value of left node canary. Its ptr to killed Node!!!)
+ Depth in tree: -12244582 (BAD)
+
+  Left canary: DEADA2EA (POISON)
+ Right canary: DEADA2EA (POISON)
+
+ Parent: 0x6 (BAD)
+ Left:   0x6 (BAD)
+ Right:  0x6 (BAD)
+
+ Value: 0xffffffffff45299a (Cant access to data)
+-------------------------------------------------------------------------------
+Node <0x7ffe019e1710>----------------------------------------------------------
+Time: 12.11.2021 17:54:10, Friday
+
+Check child  before add_child func
+ Node state:    -4 (POISONED value of left node canary. Its ptr to killed Node!!!)
+ Depth in tree: -12244582 (BAD)
+
+  Left canary: DEADA2EA (POISON)
+ Right canary: DEADA2EA (POISON)
+
+ Parent: 0x6 (BAD)
+ Left:   0x6 (BAD)
+ Right:  0x6 (BAD)
+
+ Value: 0xffffffffff45299a (Cant access to data)
+-------------------------------------------------------------------------------
+Node <0x7ffd30016fc0>----------------------------------------------------------
+Time: 12.11.2021 17:55:58, Friday
+
+Check before get_inorder func
+ Node state:    -6 (Invalid ptr to Node->parent object)
+ Depth in tree: 0 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: (nil) NULL
+ Left:   0x7ffd30017000 
+ Right:  0x7ffd30017040 
+
+ Value: 'Это животное?'
+-------------------------------------------------------------------------------
+Node <0x7fff274e7ac0>----------------------------------------------------------
+Time: 12.11.2021 17:59:20, Friday
+
+Check before get_inorder func
+ Node state:    0 (ok)
+ Depth in tree: 0 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: (nil) NULL
+ Left:   0x7fff274e7b00 
+ Right:  0x7fff274e7b40 
+
+ Value: 'Это животное?'
+-------------------------------------------------------------------------------
+|-------------------------          Tree  Dump          -------------------------|
+Time: 13.11.2021 13:53:52, Saturday
+Check before write_tree_to_file func
+    Tree state: -6 (Invalid ptr to Node->parent object)
+
+Tree size:  7 
+Tree depth: 3 
+
+Node <0x7fffdebfedd0>----------------------------------------------------------
+Time: 13.11.2021 13:53:52, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 0 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: (nil) NULL
+ Left:   0x7fffdebfee10 
+ Right:  0x7fffdebfee50 
+
+ Value: 'Это животное?'
+-------------------------------------------------------------------------------
+Node <0x7fffdebfee10>----------------------------------------------------------
+Time: 13.11.2021 13:53:52, Saturday
+
+Check before write_tree_to_file func
+ Node state:    -6 (Invalid ptr to Node->parent object)
+ Depth in tree: 1 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffedf05d370 (BAD)
+ Left:   0x7fffdebfee90 
+ Right:  0x7fffdebfeed0 
+
+ Value: 'Оно красивое?'
+-------------------------------------------------------------------------------
+Node <0x7fffdebfee50>----------------------------------------------------------
+Time: 13.11.2021 13:53:52, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 1 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7fffdebfedd0 
+ Left:   0x7fffdebfef10 
+ Right:  0x7fffdebfef50 
+
+ Value: 'Ведет матан?'
+-------------------------------------------------------------------------------
+Node <0x7fffdebfee90>----------------------------------------------------------
+Time: 13.11.2021 13:53:52, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7fffdebfee10 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Полторашка'
+-------------------------------------------------------------------------------
+Node <0x7fffdebfeed0>----------------------------------------------------------
+Time: 13.11.2021 13:53:52, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7fffdebfee10 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Таракан'
+-------------------------------------------------------------------------------
+Node <0x7fffdebfef10>----------------------------------------------------------
+Time: 13.11.2021 13:53:52, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7fffdebfee50 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Лукашов'
+-------------------------------------------------------------------------------
+Node <0x7fffdebfef50>----------------------------------------------------------
+Time: 13.11.2021 13:53:52, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7fffdebfee50 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Богданов'
+-------------------------------------------------------------------------------
+|---------------------Compilation  Date Nov 13 2021 13:53:52---------------------|
+
+|-------------------------          Tree  Dump          -------------------------|
+Time: 13.11.2021 14:05:06, Saturday
+Check before write_tree_to_file func
+    Tree state: -6 (Invalid ptr to Node->parent object)
+
+Tree size:  7 
+Tree depth: 3 
+
+Node <0x7ffe23b86bd0>----------------------------------------------------------
+Time: 13.11.2021 14:05:06, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 0 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: (nil) NULL
+ Left:   0x7ffe23b86c10 
+ Right:  0x7ffe23b86c50 
+
+ Value: 'Это животное?'
+-------------------------------------------------------------------------------
+Node <0x7ffe23b86c10>----------------------------------------------------------
+Time: 13.11.2021 14:05:06, Saturday
+
+Check before write_tree_to_file func
+ Node state:    -6 (Invalid ptr to Node->parent object)
+ Depth in tree: 1 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffedf05d370 (BAD)
+ Left:   0x7ffe23b86c90 
+ Right:  0x7ffe23b86cd0 
+
+ Value: 'Оно красивое?'
+-------------------------------------------------------------------------------
+Node <0x7ffe23b86c50>----------------------------------------------------------
+Time: 13.11.2021 14:05:06, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 1 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffe23b86bd0 
+ Left:   0x7ffe23b86d10 
+ Right:  0x7ffe23b86d50 
+
+ Value: 'Ведет матан?'
+-------------------------------------------------------------------------------
+Node <0x7ffe23b86c90>----------------------------------------------------------
+Time: 13.11.2021 14:05:06, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffe23b86c10 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Полторашка'
+-------------------------------------------------------------------------------
+Node <0x7ffe23b86cd0>----------------------------------------------------------
+Time: 13.11.2021 14:05:06, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffe23b86c10 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Таракан'
+-------------------------------------------------------------------------------
+Node <0x7ffe23b86d10>----------------------------------------------------------
+Time: 13.11.2021 14:05:06, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffe23b86c50 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Лукашов'
+-------------------------------------------------------------------------------
+Node <0x7ffe23b86d50>----------------------------------------------------------
+Time: 13.11.2021 14:05:06, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffe23b86c50 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Богданов'
+-------------------------------------------------------------------------------
+|---------------------Compilation  Date Nov 13 2021 14:05:06---------------------|
+
+|-------------------------          Tree  Dump          -------------------------|
+Time: 13.11.2021 14:07:33, Saturday
+Check before write_tree_to_file func
+    Tree state: -6 (Invalid ptr to Node->parent object)
+
+Tree size:  7 
+Tree depth: 3 
+
+Node <0x7ffcadeb3f00>----------------------------------------------------------
+Time: 13.11.2021 14:07:33, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 0 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: (nil) NULL
+ Left:   0x7ffcadeb3f40 
+ Right:  0x7ffcadeb3f80 
+
+ Value: 'Это животное?'
+-------------------------------------------------------------------------------
+Node <0x7ffcadeb3f40>----------------------------------------------------------
+Time: 13.11.2021 14:07:33, Saturday
+
+Check before write_tree_to_file func
+ Node state:    -6 (Invalid ptr to Node->parent object)
+ Depth in tree: 1 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffedf05d370 (BAD)
+ Left:   0x7ffcadeb3fc0 
+ Right:  0x7ffcadeb4000 
+
+ Value: 'Оно красивое?'
+-------------------------------------------------------------------------------
+Node <0x7ffcadeb3f80>----------------------------------------------------------
+Time: 13.11.2021 14:07:33, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 1 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffcadeb3f00 
+ Left:   0x7ffcadeb4040 
+ Right:  0x7ffcadeb4080 
+
+ Value: 'Ведет матан?'
+-------------------------------------------------------------------------------
+Node <0x7ffcadeb3fc0>----------------------------------------------------------
+Time: 13.11.2021 14:07:33, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffcadeb3f40 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Полторашка'
+-------------------------------------------------------------------------------
+Node <0x7ffcadeb4000>----------------------------------------------------------
+Time: 13.11.2021 14:07:33, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffcadeb3f40 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Таракан'
+-------------------------------------------------------------------------------
+Node <0x7ffcadeb4040>----------------------------------------------------------
+Time: 13.11.2021 14:07:33, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffcadeb3f80 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Лукашов'
+-------------------------------------------------------------------------------
+Node <0x7ffcadeb4080>----------------------------------------------------------
+Time: 13.11.2021 14:07:33, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffcadeb3f80 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Богданов'
+-------------------------------------------------------------------------------
+|---------------------Compilation  Date Nov 13 2021 14:07:33---------------------|
+
+|-------------------------          Tree  Dump          -------------------------|
+Time: 13.11.2021 14:07:46, Saturday
+Check before write_tree_to_file func
+    Tree state: -6 (Invalid ptr to Node->parent object)
+
+Tree size:  7 
+Tree depth: 3 
+
+Node <0x7ffc9616e8f0>----------------------------------------------------------
+Time: 13.11.2021 14:07:46, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 0 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: (nil) NULL
+ Left:   0x7ffc9616e930 
+ Right:  0x7ffc9616e970 
+
+ Value: 'Это животное?'
+-------------------------------------------------------------------------------
+Node <0x7ffc9616e930>----------------------------------------------------------
+Time: 13.11.2021 14:07:46, Saturday
+
+Check before write_tree_to_file func
+ Node state:    -6 (Invalid ptr to Node->parent object)
+ Depth in tree: 1 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffedf05d370 (BAD)
+ Left:   0x7ffc9616e9b0 
+ Right:  0x7ffc9616e9f0 
+
+ Value: 'Оно красивое?'
+-------------------------------------------------------------------------------
+Node <0x7ffc9616e970>----------------------------------------------------------
+Time: 13.11.2021 14:07:46, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 1 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffc9616e8f0 
+ Left:   0x7ffc9616ea30 
+ Right:  0x7ffc9616ea70 
+
+ Value: 'Ведет матан?'
+-------------------------------------------------------------------------------
+Node <0x7ffc9616e9b0>----------------------------------------------------------
+Time: 13.11.2021 14:07:46, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffc9616e930 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Полторашка'
+-------------------------------------------------------------------------------
+Node <0x7ffc9616e9f0>----------------------------------------------------------
+Time: 13.11.2021 14:07:46, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffc9616e930 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Таракан'
+-------------------------------------------------------------------------------
+Node <0x7ffc9616ea30>----------------------------------------------------------
+Time: 13.11.2021 14:07:46, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffc9616e970 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Лукашов'
+-------------------------------------------------------------------------------
+Node <0x7ffc9616ea70>----------------------------------------------------------
+Time: 13.11.2021 14:07:46, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffc9616e970 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Богданов'
+-------------------------------------------------------------------------------
+|---------------------Compilation  Date Nov 13 2021 14:07:46---------------------|
+
+|-------------------------          Tree  Dump          -------------------------|
+Time: 13.11.2021 14:08:20, Saturday
+Check before write_tree_to_file func
+    Tree state: -6 (Invalid ptr to Node->parent object)
+
+Tree size:  7 
+Tree depth: 3 
+
+Node <0x7ffcc99f8c80>----------------------------------------------------------
+Time: 13.11.2021 14:08:20, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 0 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: (nil) NULL
+ Left:   0x7ffcc99f8cc0 
+ Right:  0x7ffcc99f8d00 
+
+ Value: 'Это животное?'
+-------------------------------------------------------------------------------
+Node <0x7ffcc99f8cc0>----------------------------------------------------------
+Time: 13.11.2021 14:08:20, Saturday
+
+Check before write_tree_to_file func
+ Node state:    -6 (Invalid ptr to Node->parent object)
+ Depth in tree: 1 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffedf05d370 (BAD)
+ Left:   0x7ffcc99f8d40 
+ Right:  0x7ffcc99f8d80 
+
+ Value: 'Оно красивое?'
+-------------------------------------------------------------------------------
+Node <0x7ffcc99f8d00>----------------------------------------------------------
+Time: 13.11.2021 14:08:20, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 1 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffcc99f8c80 
+ Left:   0x7ffcc99f8dc0 
+ Right:  0x7ffcc99f8e00 
+
+ Value: 'Ведет матан?'
+-------------------------------------------------------------------------------
+Node <0x7ffcc99f8d40>----------------------------------------------------------
+Time: 13.11.2021 14:08:20, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffcc99f8cc0 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Полторашка'
+-------------------------------------------------------------------------------
+Node <0x7ffcc99f8d80>----------------------------------------------------------
+Time: 13.11.2021 14:08:20, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffcc99f8cc0 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Таракан'
+-------------------------------------------------------------------------------
+Node <0x7ffcc99f8dc0>----------------------------------------------------------
+Time: 13.11.2021 14:08:20, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffcc99f8d00 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Лукашов'
+-------------------------------------------------------------------------------
+Node <0x7ffcc99f8e00>----------------------------------------------------------
+Time: 13.11.2021 14:08:20, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffcc99f8d00 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Богданов'
+-------------------------------------------------------------------------------
+|---------------------Compilation  Date Nov 13 2021 14:08:20---------------------|
+
+|-------------------------          Tree  Dump          -------------------------|
+Time: 13.11.2021 14:08:38, Saturday
+Check before write_tree_to_file func
+    Tree state: -6 (Invalid ptr to Node->parent object)
+
+Tree size:  7 
+Tree depth: 3 
+
+Node <0x7ffea6855f40>----------------------------------------------------------
+Time: 13.11.2021 14:08:38, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 0 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: (nil) NULL
+ Left:   0x7ffea6855f80 
+ Right:  0x7ffea6855fc0 
+
+ Value: 'Это животное?'
+-------------------------------------------------------------------------------
+Node <0x7ffea6855f80>----------------------------------------------------------
+Time: 13.11.2021 14:08:38, Saturday
+
+Check before write_tree_to_file func
+ Node state:    -6 (Invalid ptr to Node->parent object)
+ Depth in tree: 1 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffedf05d370 (BAD)
+ Left:   0x7ffea6856000 
+ Right:  0x7ffea6856040 
+
+ Value: 'Оно красивое?'
+-------------------------------------------------------------------------------
+Node <0x7ffea6855fc0>----------------------------------------------------------
+Time: 13.11.2021 14:08:38, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 1 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffea6855f40 
+ Left:   0x7ffea6856080 
+ Right:  0x7ffea68560c0 
+
+ Value: 'Ведет матан?'
+-------------------------------------------------------------------------------
+Node <0x7ffea6856000>----------------------------------------------------------
+Time: 13.11.2021 14:08:38, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffea6855f80 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Полторашка'
+-------------------------------------------------------------------------------
+Node <0x7ffea6856040>----------------------------------------------------------
+Time: 13.11.2021 14:08:38, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffea6855f80 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Таракан'
+-------------------------------------------------------------------------------
+Node <0x7ffea6856080>----------------------------------------------------------
+Time: 13.11.2021 14:08:38, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffea6855fc0 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Лукашов'
+-------------------------------------------------------------------------------
+Node <0x7ffea68560c0>----------------------------------------------------------
+Time: 13.11.2021 14:08:38, Saturday
+
+Check before write_tree_to_file func
+ Node state:    0 (ok)
+ Depth in tree: 2 
+
+  Left canary: 5AFEA2EA 
+ Right canary: 5AFEA2EA 
+
+ Parent: 0x7ffea6855fc0 
+ Left:   (nil) NULL
+ Right:  (nil) NULL
+
+ Value: 'Богданов'
+-------------------------------------------------------------------------------
+|---------------------Compilation  Date Nov 13 2021 14:08:37---------------------|
+
+Node <0x7ffde4566760>----------------------------------------------------------
+Time: 13.11.2021 20:14:45, Saturday
+
+Check before get_inorder func
+ Node state:    -2 (Incorrect value of left node canary. May be it isn`t ptr to Node object)
+ Depth in tree: 0 
+
+  Left canary: 5647A7139127 (BAD)
+ Right canary: 7FFDE4566760 (BAD)
+
+ Parent: 0x1a713a2ab (BAD)
+ Left:   0x7ffd00000001 (BAD)
+ Right:  0x114d71130 (BAD)
+
+ Value: '`gV��'
+-------------------------------------------------------------------------------
+Node <0x7fff838a1d10>----------------------------------------------------------
+Time: 13.11.2021 20:26:03, Saturday
+
+Is correct parent node?
+ Node state:    -2 (Incorrect value of left node canary. May be it isn`t ptr to Node object)
+ Depth in tree: 0 
+
+  Left canary: 14 (BAD)
+ Right canary: 5AFEA2EA 
+
+ Parent: (nil) NULL
+ Left:   0x7fff838a1c30 
+ Right:  (nil) NULL
+
+ Value: '1'
+-------------------------------------------------------------------------------
