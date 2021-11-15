@@ -57,6 +57,7 @@ int main(int argc, char** argv);
 exit_codes read_bot_text(const char* text);
 int          get_user_answer(const UserInput user_input, const char* sep="");
 exit_codes check_user_asnwer(char* user_answer);
+int compare_base_values(node_t val1, node_t val2);
 
 exit_codes guess_character_game();
 exit_codes play_guess_character_game(Tree* base);

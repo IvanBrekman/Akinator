@@ -200,7 +200,7 @@ int is_right_child(Node* node) {
     return node->parent != NULL && node->parent->right == node;
 }
 
-Node* find_node_by_value(Tree* tree, node_t value, std::list<NodeDesc>* path) {
+Node* find_node_by_value(Tree* tree, node_t value, std::list<NodeDesc>* path, int (*value_comparator) (node_t val1, node_t val2)) {
     ASSERT_OK(tree, Tree, "Invalid tree ptr", NULL);
     ASSERT_IF(VALID_PTR(path), "Invalid path ptr", NULL);
 
@@ -209,7 +209,7 @@ Node* find_node_by_value(Tree* tree, node_t value, std::list<NodeDesc>* path) {
 
     Node* need_node = NULL;
     for (Node* cur_node : nodes) {
-        if (strcmp(cur_node->data, value) == 0) need_node = cur_node;
+        if (value_comparator(cur_node->data, value) == 0) need_node = cur_node;
     }
 
     if (need_node == NULL) return NULL;

@@ -5,10 +5,9 @@
 #ifndef TREE_TREEH
 #define TREE_TREEH
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 #include <list>
-#include <stack>
 
 #define ASSERT_OK(obj, type, reason, ret) {                                         \
     if (VALIDATE_LEVEL >= WEAK_VALIDATE && type ## _error(obj)) {                   \
@@ -112,7 +111,7 @@ int   is_full_node(Node* node);
 int  is_left_child(Node* node);
 int is_right_child(Node* node);
 
-Node* find_node_by_value(Tree* tree, node_t value, std::list<NodeDesc>* path);
+Node* find_node_by_value(Tree* tree, node_t value, std::list<NodeDesc>* path, int (*value_comparator) (node_t val1, node_t val2));
 
 int get_inorder_nodes(Node* node, std::list<Node*>* nodes);
 

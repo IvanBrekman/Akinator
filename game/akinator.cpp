@@ -154,6 +154,13 @@ exit_codes check_user_asnwer(char* user_answer) {
     return exit_codes::OK;
 }
 
+int compare_base_values(node_t val1, node_t val2) {
+    ASSERT_IF(val1, "Invalid val1 ptr", exit_codes::ERROR);
+    ASSERT_IF(val2, "Invalid val2 ptr", exit_codes::ERROR);
+
+    return strcmp(val1, val2);
+}
+
 exit_codes guess_character_game() {
     Tree base = { };
     tree_ctor(&base);
@@ -321,7 +328,7 @@ exit_codes get_character_desc() {
     GET_ANSWER(character);
 
     std::list<NodeDesc> path = { };
-    Node* character_node = find_node_by_value(&base, character, &path);
+    Node* character_node = find_node_by_value(&base, character, &path, compare_base_values);
 
     if (character_node == NULL) {
         read_bot_text("Дружище, ты че то попутал. Нет такого кадра в моей базе\n");
@@ -361,7 +368,7 @@ exit_codes compare_characters() {
     GET_ANSWER(first_character);
 
     std::list<NodeDesc> first_path = { };
-    Node* first_character_node = find_node_by_value(&base, first_character, &first_path);
+    Node* first_character_node = find_node_by_value(&base, first_character, &first_path, compare_base_values);
 
     if (first_character_node == NULL) {
         read_bot_text("Дружище, ты че то попутал. Нет такого кадра в моей базе\n");
@@ -373,7 +380,7 @@ exit_codes compare_characters() {
     GET_ANSWER(second_character);
 
     std::list<NodeDesc> second_path = { };
-    Node* second_character_node = find_node_by_value(&base, second_character, &second_path);
+    Node* second_character_node = find_node_by_value(&base, second_character, &second_path, compare_base_values);
 
     if (second_character_node == NULL) {
         read_bot_text("Дружище, ты че то попутал. Нет такого кадра в моей базе\n");
