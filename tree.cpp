@@ -167,15 +167,74 @@ int add_child(Node* parent, Node* child, int is_left_child) {
     ASSERT_OK(child,  Node, "Check child  before add_child func", 0);
     ASSERT_IF(is_left_child == -1 || is_left_child == 1, "Incorecct is_left_child value. Should be -1 or 1", 0);
 
-    int add_depth = (parent->left == NULL && parent->right == NULL);
-
     if (is_left_child == -1) parent->left  = child;
     else                     parent->right = child;
 
     child->parent = parent;
     child->depth  = parent->depth + 1;
 
-    return 1 + add_depth;
+    return child->depth;
+}
+
+int is_leaf(Node* node) {
+    ASSERT_OK(node, Node, "Check before is_leaf func", 0);
+
+    return node->left == NULL && node->right == NULL;
+}
+
+int is_full_node(Node* node) {
+    ASSERT_OK(node, Node, "Check before is_full_node func", 0);
+
+    return node->left != NULL && node->right != NULL;
+}
+
+int is_left_child(Node* node) {
+    ASSERT_OK(node, Node, "Check before is_left_child func", 0);
+
+    return node->parent != NULL && node->parent->left == node;
+}
+
+int is_right_child(Node* node) {
+    ASSERT_OK(node, Node, "Check before is_right_child func", 0);
+
+    return node->parent != NULL && node->parent->right == node;
+}
+
+Node* find_node_by_value(Tree* tree, node_t value, std::list<NodeDesc>* path) {
+    ASSERT_OK(tree, Tree, "Invalid tree ptr", NULL);
+    ASSERT_IF(VALID_PTR(path), "Invalid path ptr", NULL);
+
+    std::list<Node*> nodes = { };
+    get_inorder_nodes(tree->root, &nodes);
+
+    Node* need_node = NULL;
+    for (Node* cur_node : nodes) {
+        if (strcmp(cur_node->data, value) == 0) need_node = cur_node;
+    }
+
+    if (need_node == NULL) return NULL;
+
+    Node* cur_node = need_node;
+    Node* prev_node = NULL;
+    while (cur_node != NULL) {
+        path->push_front({ cur_node, cur_node->left == prev_node });
+
+        prev_node = cur_node;
+        cur_node  = cur_node->parent;
+    }
+
+    return need_node;
+}
+
+int get_inorder_nodes(Node* node, std::list<Node*>* nodes) {
+    ASSERT_OK(node, Node, "Check before get_inorder func", 0);
+    ASSERT_IF(VALID_PTR(nodes), "Invalid nodes ptr", 0);
+
+    if (node->left  != NULL) get_inorder_nodes(node->left,  nodes);
+    nodes->push_back(node);
+    if (node->right != NULL) get_inorder_nodes(node->right, nodes);
+
+    return 1;
 }
 
 int print_node(Node* node) {
@@ -270,17 +329,6 @@ int Tree_dump(Tree* tree, const char* reason, FILE* log) {
     return 1;
 }
 
-int get_inorder_nodes(Node* node, std::list<Node*>* nodes) {
-    ASSERT_OK(node, Node, "Check before get_inorder func", 0);
-    ASSERT_IF(VALID_PTR(nodes), "Invalid nodes ptr", 0);
-
-    if (node->left  != NULL) get_inorder_nodes(node->left,  nodes);
-    nodes->push_back(node);
-    if (node->right != NULL) get_inorder_nodes(node->right, nodes);
-
-    return 1;
-}
-
 int Tree_dump_graph(Tree* tree, const char* reason, FILE* log, int show_parent_edge) {
     ASSERT_IF(VALID_PTR(tree),   "Invalid tree ptr",   0);
     ASSERT_IF(VALID_PTR(log),    "Invalid log ptr",    0);
@@ -300,6 +348,12 @@ int Tree_dump_graph(Tree* tree, const char* reason, FILE* log, int show_parent_e
 
     // Fill data to graphiz----------------------------------------------------
     char* node_str = (char*) calloc(MAX_NODE_STR_SIZE, sizeof(char));
+
+    sprintf(node_str, "\tdepth[ shape=component label=\"depth: %d\" ]\n"
+                      "\t size[ shape=component label=\"size:  %d\" ]\n",
+            depth, size
+    );
+    fputs(node_str, dot_file);
 
     fputs("\t{\n\t\tnode[ style=invis ]\n\t\tedge[ style=invis ]\n", dot_file);
     for (int i = 0; i <= depth; i++) {
@@ -327,7 +381,7 @@ int Tree_dump_graph(Tree* tree, const char* reason, FILE* log, int show_parent_e
 
     for (Node* cur_node : nodes) {
         int err = Node_error(cur_node);
-        sprintf(node_str, "\t%d[shape=record label=\"%s\" width=2 color=\"%s\"]\n", INT_ADDRESS(cur_node), cur_node->data, err == 0 ? "green" : "red");
+        sprintf(node_str, "\t%d[shape=record label=\"%s|%d\" width=2 color=\"%s\"]\n", INT_ADDRESS(cur_node), cur_node->data, cur_node->depth, err == 0 ? "green" : "red");
         fputs(node_str, dot_file);
 
         if (cur_node->parent != NULL && show_parent_edge) {
@@ -426,11 +480,11 @@ int read_tree_from_file(Tree* tree, const char* source_file) {
 
     Text text = get_text_from_file(source_file);
 
-    printf("Start parsing data...\n");
+    LOG1(printf("Start parsing data...\n"););
     std::list<Node_Child> added_nodes = { };
     int shift = 0;
     int analyze_result = analyze_tree_data(text.text[0].ptr, tree, &added_nodes, &shift);
-    printf("End parsing data.\n");
+    LOG1(printf("End parsing data.\n"););
 
     ASSERT_OK(tree, Tree, "Check after reading tree", 0);
     return analyze_result;
@@ -445,6 +499,7 @@ int update_tree_depth_size(Tree* tree) {
         Node* cur_node = nodes.front();
         
         cur_node->depth = cur_node->parent != NULL ? cur_node->parent->depth + 1 : 0;
+        tree->depth = cur_node->depth;
         nodes.pop_front();
 
         if (cur_node->left  != NULL) nodes.push_back(cur_node->left);
@@ -467,14 +522,14 @@ int analyze_tree_data(char* data, Tree* tree, std::list<Node_Child>* added_nodes
     int start_pos = i;
 
     if (i < 0) return -1;           // '{' hasnt found
-    LOG1(analyze_func_debug(data, i, added_nodes, "Check state at start"););
+    LOG2(analyze_func_debug(data, i, added_nodes, "Check state at start"););
 
     // Find indexes of open and close quoter-------------------------------
     i += 2;
     if (data[i] != '"') return i;   // Open  quote hasnt found
     int close_qt = IND_STRCHR(data, i + 1, '"');
     if (close_qt < 0) return i + 1; // Close quote hasnt found
-    LOG1(analyze_func_debug(data, i, added_nodes, "Find close quote"););
+    LOG2(analyze_func_debug(data, i, added_nodes, "Find close quote"););
     // --------------------------------------------------------------------
 
     // Create new node with data between " "-------------------------------
@@ -482,16 +537,15 @@ int analyze_tree_data(char* data, Tree* tree, std::list<Node_Child>* added_nodes
 
     Node* new_node = (Node*) calloc(1, sizeof(Node));
     node_ctor(new_node, NULL, (node_t)strdup(&data[i + 1]));
-    ASSERT_OK(new_node, Node, "Is correct ctor new_node?", 999);
     added_nodes->push_back({ new_node, 0 });
 
     data[close_qt] = '"';
-    LOG1(analyze_func_debug(data, i, added_nodes, "Check added node"););
+    LOG2(analyze_func_debug(data, i, added_nodes, "Check added node"););
     // --------------------------------------------------------------------
 
     // Parse first child---------------------------------------------------
     i = close_qt + 2;
-    LOG1(analyze_func_debug(data, i, added_nodes, "Checks first child"););
+    LOG2(analyze_func_debug(data, i, added_nodes, "Checks first child"););
     if (data[i] == 'n') {
         if (added_nodes->empty()) return i; // List of nodes is empty (expected some element)
 
@@ -501,22 +555,22 @@ int analyze_tree_data(char* data, Tree* tree, std::list<Node_Child>* added_nodes
         added_nodes->pop_back();
         added_nodes->push_back(tmp);
     } else if (data[i] == '{') {
-        LOG1(analyze_func_debug(data, i, added_nodes, "Call recursive for new node at first child"););
+        LOG2(analyze_func_debug(data, i, added_nodes, "Call recursive for new node at first child"););
 
         int anal_res = analyze_tree_data(&data[i], tree, added_nodes, shift);  // Analyze new node
         if (anal_res != -1) return anal_res;
 
         i += *shift;
-        LOG1(analyze_func_debug(data, i, added_nodes, "Ended analyzing node at first child"););
+        LOG2(analyze_func_debug(data, i, added_nodes, "Ended analyzing node at first child"););
     } else {
         return i;                   // Incorrect seq continuation
     }
-    LOG1(analyze_func_debug(data, i, added_nodes, "End checks first child"););
+    LOG2(analyze_func_debug(data, i, added_nodes, "End checks first child"););
     // --------------------------------------------------------------------
 
     // Parse second child--------------------------------------------------
     i += 2;
-    LOG1(analyze_func_debug(data, i, added_nodes, "Checks second child"););
+    LOG2(analyze_func_debug(data, i, added_nodes, "Checks second child"););
     if (data[i] == 'n') {
         if (added_nodes->empty()) return i; // List of nodes is empty (expected some element)
 
@@ -526,17 +580,17 @@ int analyze_tree_data(char* data, Tree* tree, std::list<Node_Child>* added_nodes
         added_nodes->pop_back();
         added_nodes->push_back(tmp);
     } else if (data[i] == '{') {
-        LOG1(analyze_func_debug(data, i, added_nodes, "Call recursive for new node at first child"););
+        LOG2(analyze_func_debug(data, i, added_nodes, "Call recursive for new node at first child"););
 
         int anal_res = analyze_tree_data(&data[i], tree, added_nodes, shift);  // Analyze new node
         if (anal_res != -1) return anal_res;
 
         i += *shift;
-        LOG1(analyze_func_debug(data, i, added_nodes, "Ended analyzing node at second child"););
+        LOG2(analyze_func_debug(data, i, added_nodes, "Ended analyzing node at second child"););
     } else {
         return i;                   // Incorrect seq continuation
     }
-    LOG1(analyze_func_debug(data, i, added_nodes, "End checks second child"););
+    LOG2(analyze_func_debug(data, i, added_nodes, "End checks second child"););
     // --------------------------------------------------------------------
 
     // Check correctness node ending-------------------------------------------
@@ -550,11 +604,12 @@ int analyze_tree_data(char* data, Tree* tree, std::list<Node_Child>* added_nodes
     // ------------------------------------------------------------------------
 
     // Adding child to parent node---------------------------------------------
-    LOG1(analyze_func_debug(data, i, added_nodes, "Check node ending"););
+    LOG2(analyze_func_debug(data, i, added_nodes, "Check node ending"););
     if (added_nodes->empty()) {     // It is root of tree
         tree->root = ready_node.node;
         update_tree_depth_size(tree);
-        Tree_dump(tree, "Check read func work");
+
+        ASSERT_OK(tree, Tree, "Check analyzing func work", 0);
         return -1;
     }
 
@@ -570,7 +625,7 @@ int analyze_tree_data(char* data, Tree* tree, std::list<Node_Child>* added_nodes
     // ------------------------------------------------------------------------
     
     *shift = i - start_pos;
-    LOG1(analyze_func_debug(data, i, added_nodes, "Check updating children"););
+    LOG2(analyze_func_debug(data, i, added_nodes, "Check updating children"););
     return -1;
 }
 

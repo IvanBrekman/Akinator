@@ -100,7 +100,7 @@ int main(int argc, char** argv) {
     // Tree_dump_graph(&tree, "Check graph dump", graph_log);
     // fclose(graph_log);
 
-    write_tree_to_file(&tree, "db/test.txt");
+    write_tree_to_file(&tree, "db/base.txt");
 
     printf("-------------------------------------------------------------------\n");
     getchar();

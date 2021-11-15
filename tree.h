@@ -24,9 +24,9 @@
 }
 
 #define ADD_CHILD(tree, parent, child, type_child) {                                \
-    int add_depth = add_child(&parent, &child, type_child);                         \
-    if (add_depth >= 1) tree.size++;                                                \
-    if (add_depth == 2) tree.depth++;                                               \
+    int result = add_child(&parent, &child, type_child);                            \
+    if (result >= 1) tree.size++;                                                   \
+    tree.depth = tree.depth >= result ? tree.depth : result;                        \
 }
 
 #define IND_STRCHR(ptr, index, sym) (int)(strchr(&(ptr)[index], sym) - (ptr))
@@ -67,6 +67,11 @@ struct Node_Child {
     int child_amount = 0;
 };
 
+struct NodeDesc {
+    Node* node   = { };
+    int is_left_child = -1;
+};
+
 enum errors {
     OK_               =  0,
 
@@ -101,7 +106,15 @@ const char* error_desc(int error_code);
 int Tree_error(Tree* tree);
 int Node_error(Node* node, int recursive_check=0);
 
-int add_child(Node* parent, Node* child, int is_left_child);
+int      add_child(Node* parent, Node* child, int is_left_child);
+int        is_leaf(Node* node);
+int   is_full_node(Node* node);
+int  is_left_child(Node* node);
+int is_right_child(Node* node);
+
+Node* find_node_by_value(Tree* tree, node_t value, std::list<NodeDesc>* path);
+
+int get_inorder_nodes(Node* node, std::list<Node*>* nodes);
 
 int print_node(Node* node);
 int  Node_dump(Node* node, const char* reason, FILE* log=stdout);

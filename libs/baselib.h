@@ -6,11 +6,11 @@
 #define BASELIB_H
 
 #ifndef VALIDATE_LEVEL
-    #define VALIDATE_LEVEL 1
+    #define VALIDATE_LEVEL 0
 #endif
 
 #ifndef LOG_PRINTF
-    #define LOG_PRINTF 1
+    #define LOG_PRINTF 0
 #endif
 
 #ifndef LOG_GRAPH
