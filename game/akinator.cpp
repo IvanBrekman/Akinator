@@ -183,9 +183,24 @@ exit_codes guess_character_game() {
 exit_codes play_guess_character_game(Tree* base) {
     ASSERT_OK(base, Tree, "Check before play_guess_character_game func", exit_codes::ERROR);
 
+    std::list<NodeDesc> return_points = { };
+    std::list<Node*>       end_points = { };
+
     Node* cur_node = base->root;
     while (1) {
         ASSERT_OK(cur_node, Node, "Check cur_node", exit_codes::ERROR);
+
+        printf("return_points: [ ");
+        for (NodeDesc ret_point : return_points) {
+            printf("('%s', %d), ", ret_point.node->data, ret_point.is_left_child);
+        }
+        printf("]\n");
+
+        printf("   end_points: [ ");
+        for (Node* end_point : end_points) {
+            printf("'%s', ", end_point->data);
+        }
+        printf("]\n");
 
         if (is_full_node(cur_node)) {
             printf("\n%s?\n", cur_node->data);
@@ -200,6 +215,23 @@ exit_codes play_guess_character_game(Tree* base) {
                 case answers::NEGATIVE:
                     cur_node = cur_node->right;
                     continue;
+                case answers::MORE_POS:
+                    return_points.push_back({ cur_node, 0 });
+                    cur_node = cur_node->left;
+                    continue;
+                case answers::MORE_NEG:
+                    return_points.push_back({ cur_node, 1 });
+                    cur_node = cur_node->right;
+                    continue;
+                case answers::UNDEFINED: {
+                    int direction = rand() % 2;
+                    return_points.push_back({ cur_node, direction });
+                    cur_node = direction == 0 ? cur_node->left : cur_node->right;
+
+                    read_bot_text("Ладно, допустим, что ответ был ");
+                    read_bot_text(direction == 0 ? "да\n" : "нет\n");
+                    continue;
+                }
                 
                 default:
                     PRINT_WARNING("Unexpected answer\n");
@@ -219,7 +251,25 @@ exit_codes play_guess_character_game(Tree* base) {
                     );
                     return exit_codes::OK;
                 case answers::NEGATIVE: {
-                    char* real_answer = rework_database_with_new_node(base, cur_node);
+                    if (!return_points.empty()) {
+                        NodeDesc ret_point = return_points.back();
+                        return_points.pop_back();
+
+                        read_bot_text("Окей, попробуем вернуться назад к вопросу, у которого ты не мог определиться.\n"
+                                      "Боже, ты даже определенного ответа дать не мог.. куда катится этот мир...\n"
+                                      "Возвращаюсь к вопросу '"
+                        );
+                        read_bot_text(ret_point.node->data);
+                        read_bot_text("', но теперь посчитаем, что ты ответил ");
+                        read_bot_text(ret_point.is_left_child ? "да\n" : "нет\n");
+
+                        end_points.push_back(cur_node);
+                        cur_node = ret_point.is_left_child ? ret_point.node->left : ret_point.node->right;
+                        continue;
+                    }
+
+                    end_points.push_back(cur_node);
+                    char* real_answer = rework_database_with_new_node(base, &end_points);
                     ASSERT_OK(base, Tree, "Check reworking base", exit_codes::ERROR);
 
                     read_bot_text("Ах да точно, как я мог про это забыть, вот же эта запись в моей памяти.\n"
@@ -239,10 +289,11 @@ exit_codes play_guess_character_game(Tree* base) {
     }
 }
 
-char* rework_database_with_new_node(Tree* base, Node* changing_node) {
-    ASSERT_OK(base,          Tree, "Check before rework_database_with_new_node func", NULL);
-    ASSERT_OK(changing_node, Node, "Check before rework_database_with_new_node func", NULL);
+char* rework_database_with_new_node(Tree* base, std::list<Node*>* end_points) {
+    ASSERT_OK(base,          Tree,   "Check before rework_database_with_new_node func", NULL);
+    ASSERT_IF(VALID_PTR(end_points), "Invalid end_points ptr",                          NULL);
 
+    // Get real answer---------------------------------------------------------
     char* real_answer = (char*) calloc(MAX_ANSWER_SIZE, sizeof(char));
     printf("А какой был правильный ответ?\n");
     GET_ANSWER(real_answer);
@@ -252,7 +303,37 @@ char* rework_database_with_new_node(Tree* base, Node* changing_node) {
         PRINT_WARNING("Error in check_result_answer for real_answer\n");
         return NULL;
     }
+    // ------------------------------------------------------------------------
 
+    // Get neares answer-------------------------------------------------------
+    Node* changing_node = (Node*) calloc(1, sizeof(Node));
+    if (end_points->size() == 1) {
+        changing_node = end_points->back();
+        end_points->pop_back();
+    } else {
+        int i = 0;
+        UserInput possible_end_points = { };
+        for (Node* end_point : *end_points) {
+            possible_end_points.possible_input[i++] = end_point->data;
+        }
+        possible_end_points.answer_amount = i;
+
+        read_bot_text("Хорошо, выбери какой из ответов ближе всего подходит к твоему загаданному персонажу\n"
+                      "Надеюсь хотя бы с этим ты справишься мешочек костей? :)\n"
+        );
+        int user_answer = get_user_answer(possible_end_points, "\n");
+        while (user_answer-- > 0) end_points->pop_front();
+
+        changing_node = end_points->front();
+        end_points->pop_front();
+
+        read_bot_text("Хорошо, значит ближайший подходящий персонаж: ");
+        read_bot_text(changing_node->data);
+        read_bot_text("\n");
+    }
+    // ------------------------------------------------------------------------
+
+    // Get distinguishing_feature----------------------------------------------
     char* distinguishing_feature = (char*) calloc(MAX_ANSWER_SIZE, sizeof(char));
     printf("А чем '%s' отличается от '%s'?\n", real_answer, changing_node->data);
     GET_ANSWER(distinguishing_feature);
@@ -262,7 +343,9 @@ char* rework_database_with_new_node(Tree* base, Node* changing_node) {
         PRINT_WARNING("Error in check_result_answer for distinguishing_feature\n");
         return NULL;
     }
+    // ------------------------------------------------------------------------
 
+    // Adding new edges and reworking tree-------------------------------------
     Node* new_feature = (Node*) calloc(1, sizeof(Node));
     node_ctor(new_feature, NULL, distinguishing_feature);
 
@@ -278,6 +361,7 @@ char* rework_database_with_new_node(Tree* base, Node* changing_node) {
     ADD_CHILD((*base), *new_feature, *new_leaf,     -1);
     ADD_CHILD((*base), *new_feature, *changing_node, 1);
     LOG1(LOG_DUMP_GRAPH(base, "Check adding new node", Tree_dump_graph););
+    // ------------------------------------------------------------------------
 
     ASSERT_OK(base, Tree, "Check after rework_database_with_new_node func", NULL);
     return real_answer;

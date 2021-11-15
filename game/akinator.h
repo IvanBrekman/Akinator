@@ -14,7 +14,7 @@ const char* DB_FILE = "db/base.txt";
 
 struct UserInput {
     const char* possible_input[MAX_INPUT_VARIANTS] = { };
-    const int   answer_amount = -1;
+          int   answer_amount = -1;
     // enum answers { a=1, b=2, c=3, d=4 };
 };
 
@@ -22,7 +22,7 @@ const UserInput BIN_ANSWERS = {
     { "нет", "да" }, 2
 };
 const UserInput POSSIBLE_ANSWERS = {
-    { "нет", "да" }, 2
+    { "нет", "да", "скорее нет", "скорее да", "не знаю" }, 5
 };
 const UserInput GAME_MODES = {
     { "Угадай персонажа",
@@ -35,8 +35,11 @@ const UserInput GAME_MODES = {
 };
 
 enum answers {
-    POSITIVE = 1,
-    NEGATIVE = 0
+    NEGATIVE  = 0,
+    POSITIVE  = 1,
+    MORE_NEG  = 2,
+    MORE_POS  = 3,
+    UNDEFINED = 4
 };
 enum game_modes {
     GUESS_CHARACTER        = 0,
@@ -61,7 +64,7 @@ int compare_base_values(node_t val1, node_t val2);
 
 exit_codes guess_character_game();
 exit_codes play_guess_character_game(Tree* base);
-char*  rework_database_with_new_node(Tree* base, Node* changing_node);
+char* rework_database_with_new_node(Tree* base, std::list<Node*>* end_points);
 
 exit_codes show_base();
 

@@ -429,7 +429,7 @@ int Tree_dump_graph(Tree* tree, const char* reason, FILE* log, int show_parent_e
     fclose(dot_file);
 
     time_t seconds = time(NULL);
-    sprintf(node_str, "dot -v -Tpng logs/dot_file.txt -o logs/graph_%ld.png", seconds);
+    sprintf(node_str, "dot -Tpng logs/dot_file.txt -o logs/graph_%ld.png", seconds);
     system(node_str);
 
     fputs("<h1 align=\"center\">Dump Tree</h1>\n<pre>\n", log);
